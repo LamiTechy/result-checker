@@ -1,0 +1,17 @@
+{
+  "name": "ca-result-checker",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:backend\" \"npm run dev:frontend\"",
+    "dev:backend": "cd BACKEND && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev",
+    "build": "cd frontend && npm run build",
+    "start": "cd BACKEND && node dist/index.js",
+    "db:generate": "cd BACKEND && npm run db:generate",
+    "db:migrate": "cd BACKEND && npm run db:migrate",
+    "db:seed": "cd BACKEND && npm run db:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}

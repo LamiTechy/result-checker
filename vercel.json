@@ -1,0 +1,15 @@
+{
+  "buildCommand": "cd api && npm install && cd ../BACKEND && npm install && cd ../frontend && npm install && npm run build",
+  "outputDirectory": "frontend/dist",
+  "installCommand": "npm install",
+  "functions": {
+    "api/index.ts": {
+      "runtime": "@vercel/node@3",
+      "maxDuration": 10
+    }
+  },
+  "routes": [
+    { "source": "/api/(.*)", "destination": "/api" },
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
