@@ -74,7 +74,7 @@ export default function AdminStudents() {
             <h2 className="text-lg font-bold mb-4">{editing ? 'Edit Student' : 'Add Student'}</h2>
             <form onSubmit={handleSubmit} className="space-y-3">
               <div><label className="label">Full Name</label><input className="input" value={form.fullName} onChange={(e) => setForm({ ...form, fullName: e.target.value })} required /></div>
-              <div><label className="label">Matric No</label><input className="input" value={form.matricNo} onChange={(e) => setForm({ ...form, matricNo: e.target.value })} required /></div>
+              <div><label className="label">Matric No</label><input className="input" placeholder="e.g. 24/145/0001" value={form.matricNo} onChange={(e) => setForm({ ...form, matricNo: e.target.value })} required /></div>
               <div><label className="label">Department</label><input className="input" value={form.department} onChange={(e) => setForm({ ...form, department: e.target.value })} required /></div>
               <div className="grid grid-cols-2 gap-3">
                 <div><label className="label">Level</label><input className="input" value={form.level} onChange={(e) => setForm({ ...form, level: e.target.value })} required /></div>

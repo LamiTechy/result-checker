@@ -53,7 +53,7 @@ export default function AdminLogin() {
             {submitting ? 'Signing in...' : 'Sign In'}
           </button>
         </form>
-        <p className="text-center text-xs text-gray-400 mt-6">Moshood Abiola Polytechnic</p>
+        <p className="text-center text-xs text-gray-400 mt-6">CA Result Checker</p>
       </motion.div>
     </div>
   );

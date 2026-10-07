@@ -1,7 +1,7 @@
 import { Router, Response } from 'express';
 import { db } from '../db/index.js';
 import { students, caResults, courses } from '../db/schema.js';
-import { AuthRequest, requireAdmin } from '../middleware/auth.js';
+import { AuthRequest, requireAdmin, requireStudent } from '../middleware/auth.js';
 import { audit } from '../utils/audit.js';
 import { eq, and } from 'drizzle-orm';
 
@@ -57,16 +57,19 @@ router.delete('/:id', requireAdmin, async (req: AuthRequest, res: Response) => {
   res.json({ message: 'Student deleted' });
 });
 
-router.post('/verify', async (req: AuthRequest, res: Response) => {
+router.post('/verify', requireStudent, async (req: AuthRequest, res: Response) => {
   const { matricNo, surname } = req.body;
   if (!matricNo || !surname) {
     return res.status(400).json({ error: 'Matric number and surname required' });
   }
   const [student] = await db.select().from(students).where(eq(students.matricNo, matricNo));
   if (!student) return res.status(404).json({ error: 'Student not found' });
+  if (student.id !== req.student!.id) {
+    return res.status(403).json({ error: 'You can only view your own results' });
+  }
   const surnameLower = student.fullName.toLowerCase().split(' ')[0];
   if (surname.toLowerCase() !== surnameLower) {
-    return res.status(401).json({ error: 'Surname does not match' });
+    return res.status(403).json({ error: 'Surname does not match' });
   }
   const results = await db.select({
     courseCode: courses.code,

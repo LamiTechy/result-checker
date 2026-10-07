@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Search, GraduationCap, ArrowRight } from 'lucide-react';
+import { Search, GraduationCap, ArrowRight, LogOut } from 'lucide-react';
+import { useStudentAuth } from '../context/StudentAuthContext';
 
 export default function StudentPortal() {
   const navigate = useNavigate();
-  const [matricNo, setMatricNo] = useState('');
+  const { student, logout } = useStudentAuth();
+  const [matricNo, setMatricNo] = useState(student?.matricNo || '');
   const [surname, setSurname] = useState('');
 
   function handleSubmit(e: React.FormEvent) {
@@ -15,12 +17,24 @@ export default function StudentPortal() {
     }
   }
 
+  function handleLogout() {
+    logout();
+    navigate('/login', { replace: true });
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-primary-500 to-primary-700 flex flex-col">
       <header className="py-6 px-4 text-center text-white">
         <GraduationCap className="mx-auto mb-2" size={36} />
-        <h1 className="text-xl font-bold tracking-tight">MAPOLY CA Result Checker</h1>
-        <p className="text-white/70 text-sm">Moshood Abiola Polytechnic</p>
+        <h1 className="text-xl font-bold tracking-tight">CA Result Checker</h1>
+        {student && (
+          <div className="max-w-md mx-auto mt-3 flex items-center justify-between text-sm">
+            <span className="text-white/80">{student.fullName}</span>
+            <button onClick={handleLogout} className="flex items-center gap-1 text-white/70 hover:text-white transition-colors">
+              <LogOut size={14} /> Sign out
+            </button>
+          </div>
+        )}
       </header>
 
       <div className="flex-1 flex items-center justify-center px-4 pb-20">
@@ -31,7 +45,7 @@ export default function StudentPortal() {
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
                 <label className="label">Matriculation Number</label>
-                <input className="input" placeholder="e.g. IFE2020/001" value={matricNo} onChange={(e) => setMatricNo(e.target.value)} required />
+                <input className="input" placeholder="e.g. 24/145/0001" value={matricNo} onChange={(e) => setMatricNo(e.target.value)} required />
               </div>
               <div>
                 <label className="label">Surname</label>
@@ -46,7 +60,7 @@ export default function StudentPortal() {
         </motion.div>
       </div>
 
-      <footer className="py-4 text-center text-white/40 text-xs">Moshood Abiola Polytechnic &copy; {new Date().getFullYear()}</footer>
+      <footer className="py-4 text-center text-white/40 text-xs">CA Result Checker &copy; {new Date().getFullYear()}</footer>
     </div>
   );
 }

@@ -57,7 +57,7 @@ export default function StudentResults() {
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="bg-white rounded-2xl shadow-sm border p-8 print:shadow-none print:border-none">
           <div className="text-center border-b pb-6 mb-6">
             <GraduationCap className="mx-auto mb-2 text-primary-500" size={32} />
-            <h1 className="text-lg font-bold">Moshood Abiola Polytechnic</h1>
+            <h1 className="text-lg font-bold">CA Result Checker</h1>
             <p className="text-sm text-gray-500">Continuous Assessment Result Slip</p>
           </div>
 

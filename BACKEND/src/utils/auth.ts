@@ -15,6 +15,10 @@ export function generateToken(payload: { id: number; email: string; role: string
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' });
 }
 
-export function verifyToken(token: string): { id: number; email: string; role: string } {
-  return jwt.verify(token, JWT_SECRET) as { id: number; email: string; role: string };
+export function generateStudentToken(payload: { id: number; matricNo: string }): string {
+  return jwt.sign({ ...payload, role: 'student' }, JWT_SECRET, { expiresIn: '24h' });
+}
+
+export function verifyToken(token: string): { id: number; email?: string; role: string; matricNo?: string } {
+  return jwt.verify(token, JWT_SECRET) as { id: number; email?: string; role: string; matricNo?: string };
 }
